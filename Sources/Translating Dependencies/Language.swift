@@ -38,11 +38,11 @@ extension Dependency.Values {
     }
 }
 
+// swift-format-ignore: AvoidRetroactiveConformances
 /// Conformance to Dependency.Key allows Language to be used as a dependency.
 ///
 /// Defaults to English as a safe fallback. For system language detection based on
 /// locale, install the resolver from the `Translating Platform` module.
-// swift-format-ignore: AvoidRetroactiveConformances
 extension Language: @retroactive Dependency.Key {
     /// Live value defaults to English as the fallback language
     public static var liveValue: Self {
@@ -60,8 +60,8 @@ extension Language: @retroactive Dependency.Key {
     }
 }
 
-/// String representation support for Translated<String> types using current language dependency.
 // swift-format-ignore: AvoidRetroactiveConformances
+/// String representation support for Translated<String> types using current language dependency.
 extension Translated: @retroactive CustomStringConvertible where A == String {
     /// Returns the translation for the current language dependency.
     ///
@@ -81,8 +81,8 @@ extension Translated: @retroactive CustomStringConvertible where A == String {
     }
 }
 
-/// Comparison support for Translated types using current language dependency.
 // swift-format-ignore: AvoidRetroactiveConformances
+/// Comparison support for Translated types using current language dependency.
 extension Translated: @retroactive Comparable where A: Comparable {
     /// Compares two Translated instances using the current language dependency.
     ///

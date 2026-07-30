@@ -8,9 +8,8 @@
 import Dependencies
 import Dependencies_Test_Support
 import Foundation
-import Testing
-
 import Language
+import Testing
 import Translated
 import Translated_String
 
