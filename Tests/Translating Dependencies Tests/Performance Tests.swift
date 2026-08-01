@@ -165,7 +165,9 @@ struct Performance {
                     var translatedStrings: [Translated<String>] = []
                     translatedStrings.reserveCapacity(stringCount)
 
-                    (1...stringCount).forEach { i in
+                    // swift-linter:disable:next counter loop iteration
+                    // REASON: swift-format's ReplaceForEachWithForLoop rule (CI-enforced) requires a for-in loop here; forEach was reverted after it broke CI.
+                    for i in 1...stringCount {
                         let translated = Translated<String> { language in
                             "String \(i) in \(language)"
                         }
