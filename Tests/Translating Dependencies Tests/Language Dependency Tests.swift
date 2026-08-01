@@ -18,6 +18,9 @@ import Translated_String
     .dependency(\.language, .english)
 )
 struct `Language Dependency Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
 
     @Suite
     struct `Language Dependency Integration` {

@@ -23,7 +23,7 @@ extension [String] {
 extension [String] {
     /// Joins strings with a translated separator
     public func joined(separator: TranslatedString) -> TranslatedString {
-        .perLanguage({ language in
+        .mapping({ language in
             self.joined(separator: separator(language))
         })
     }
@@ -35,7 +35,7 @@ extension [String] {
         guard !self.isEmpty else { return "" }
         guard self.count > 1 else { return .init(self[0]) }
 
-        return .perLanguage({ language in
+        return .mapping({ language in
             let localizedSeparator = TranslatedString(separator)(language)
 
             if self.count == 2 {
@@ -55,7 +55,7 @@ extension [String] {
 extension [String] {
     /// Formats a list with proper grammar and localized separators
     public func formattedList(separator: ListSeparator = .and) -> Translated<Self> {
-        .perLanguage({ _ in
+        .mapping({ _ in
             switch separator {
             case .and:
                 return self.formattedItems(with: "and")  // TODO: Use proper localized "and"

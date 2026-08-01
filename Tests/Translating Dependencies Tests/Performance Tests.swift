@@ -25,6 +25,9 @@ import Translated_String
     .disabled("Enable for performance testing")
 )
 struct Performance {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
 
     @Suite(
         .serialized
@@ -162,7 +165,7 @@ struct Performance {
                     var translatedStrings: [Translated<String>] = []
                     translatedStrings.reserveCapacity(stringCount)
 
-                    for i in 1...stringCount {
+                    (1...stringCount).forEach { i in
                         let translated = Translated<String> { language in
                             "String \(i) in \(language)"
                         }

@@ -19,6 +19,9 @@ import Translated_String
     .dependency(\.language, .english)
 )
 struct `Translating Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
 
     @Suite
     struct `Closure Based Initializer` {

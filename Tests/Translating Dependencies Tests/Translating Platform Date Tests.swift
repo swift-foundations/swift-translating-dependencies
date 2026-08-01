@@ -21,6 +21,9 @@ import Translating_Platform
     .dependency(\.language, .english)
 )
 struct `Translating Platform Date Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
 
     @Suite
     struct `Date Formatted Extension` {

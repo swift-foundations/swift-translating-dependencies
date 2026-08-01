@@ -36,12 +36,12 @@ extension Translated {
     public init(
         _ closure: (Language) -> A
     ) {
-        self = .perLanguage(closure)
+        self = .mapping(closure)
     }
 
     /// The non-deprecated implementation shared by the deprecated public
     /// closure initializer and this package's list-joining surface.
-    internal static func perLanguage(
+    internal static func mapping(
         _ closure: (Language) -> A
     ) -> Self {
         @Dependency(\.language) var language

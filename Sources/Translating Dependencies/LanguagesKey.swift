@@ -15,9 +15,13 @@ public import Language
 private enum LanguagesKey: Dependency.Key {}
 
 extension LanguagesKey {
+    // swift-linter:disable:next compound identifier
+    // REASON: Dependency.Key protocol requirement on a private enum (LanguagesKey); no consumer-observable surface per the private-type carve-out.
     /// Live value includes all supported languages
     static let liveValue: Swift.Set<Language> = .supported
 
+    // swift-linter:disable:next compound identifier
+    // REASON: Dependency.Key protocol requirement on a private enum (LanguagesKey); no consumer-observable surface per the private-type carve-out.
     /// Test value includes all supported languages for comprehensive testing
     static let testValue: Swift.Set<Language> = .supported
 }

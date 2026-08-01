@@ -12,6 +12,9 @@ import Translating_Dependencies
 // time; the examples now live in this package. Reconciliation rides the close report.
 @Suite
 struct `Readme Verification` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
 
     // MARK: - Quick Start Example
 
