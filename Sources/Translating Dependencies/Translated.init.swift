@@ -1,12 +1,3 @@
-//
-//  Translated.init.swift
-//  swift-translating-dependencies
-//
-//  The 180-label, \.languages-filtering mass initializer (package access:
-//  its only caller is the english-non-optional public wrapper beside it).
-//  Moved from swift-translating (decomposition W3, C-translating).
-//
-
 import Dependencies
 import Language
 package import Translated
@@ -196,13 +187,10 @@ extension Translated {
     ) {
         @Dependency(\.languages) var languages
 
-        // Build dictionary efficiently by only checking non-nil parameters
-        // and using direct dictionary construction instead of compactMapValues
         var dictionary: [Language: A] = [:]
-        // Pre-allocate for better performance
+
         dictionary.reserveCapacity(min(languages.count, 180))
 
-        // Use a closure to reduce code duplication and improve performance
         let addIfIncluded = { (language: Language, value: A?) in
             if let value, languages.contains(language) {
                 dictionary[language] = value

@@ -1,10 +1,3 @@
-//
-//  File.swift
-//
-//
-//  Created by Coen ten Thije Boonkkamp on 19/07/2024.
-//
-
 import Dependencies
 import Dependencies_Test_Support
 import Foundation
@@ -42,11 +35,10 @@ struct `Translating Tests` {
                     }
                 }
 
-                // Should only contain the languages in the dependency
                 #expect(translated[.dutch] == "Hallo")
                 #expect(translated[.french] == "Bonjour")
                 #expect(translated[.german] == "Hallo")
-                #expect(translated[.spanish] == "Hello")  // Falls back to default
+                #expect(translated[.spanish] == "Hello")
             }
         }
 
@@ -61,11 +53,11 @@ struct `Translating Tests` {
                     "Content for \(language)"
                 }
 
-                #expect(translated[.dutch] == "Content for nl")  // Has Dutch translation
-                // Has English translation (also the default)
+                #expect(translated[.dutch] == "Content for nl")
+
                 #expect(translated[.english] == "Content for en")
-                #expect(translated[.french] == "Content for en")  // Falls back to default
-                #expect(translated[.german] == "Content for en")  // Falls back to default
+                #expect(translated[.french] == "Content for en")
+                #expect(translated[.german] == "Content for en")
             }
         }
     }
@@ -84,15 +76,14 @@ struct `Translating Tests` {
                     "Default",
                     dutch: "Hallo",
                     french: "Bonjour",
-                    german: "Hallo",  // This should be ignored
-                    spanish: "Hola"  // This should be ignored
+                    german: "Hallo",
+                    spanish: "Hola"
                 )
 
-                // Only Dutch and French should be in dictionary
                 #expect(translated[.dutch] == "Hallo")
                 #expect(translated[.french] == "Bonjour")
-                #expect(translated[.german] == "Default")  // Falls back to default
-                #expect(translated[.spanish] == "Default")  // Falls back to default
+                #expect(translated[.german] == "Default")
+                #expect(translated[.spanish] == "Default")
             }
         }
 
@@ -110,10 +101,9 @@ struct `Translating Tests` {
                     german: "Hallo"
                 )
 
-                // No languages should match
-                #expect(translated[.dutch] == "Default")  // Falls back to default
-                #expect(translated[.french] == "Default")  // Falls back to default
-                #expect(translated[.german] == "Default")  // Falls back to default
+                #expect(translated[.dutch] == "Default")
+                #expect(translated[.french] == "Default")
+                #expect(translated[.german] == "Default")
             }
         }
     }
@@ -143,7 +133,7 @@ struct `Translating Tests` {
             }
 
             withDependencies {
-                $0.language = .spanish  // Falls back to default
+                $0.language = .spanish
             } operation: {
                 #expect(translated.description == "Default")
             }
@@ -169,19 +159,19 @@ struct `Translating Tests` {
             withDependencies {
                 $0.language = .english
             } operation: {
-                #expect(translated1 < translated2)  // "Apple" < "Banana"
+                #expect(translated1 < translated2)
             }
 
             withDependencies {
                 $0.language = .dutch
             } operation: {
-                #expect(translated1 < translated2)  // "Appel" < "Banaan"
+                #expect(translated1 < translated2)
             }
 
             withDependencies {
                 $0.language = .french
             } operation: {
-                #expect(translated2 < translated1)  // "Banane" < "Pomme"
+                #expect(translated2 < translated1)
             }
         }
     }
@@ -200,8 +190,8 @@ struct `Translating Tests` {
                     "Content for \(language)"
                 }
 
-                #expect(translated[.french] == "Content for en")  // Falls back to default
-                #expect(translated[.german] == "Content for en")  // Falls back to default
+                #expect(translated[.french] == "Content for en")
+                #expect(translated[.german] == "Content for en")
             }
         }
 
@@ -220,8 +210,8 @@ struct `Translating Tests` {
                 )
 
                 #expect(translated[.french] == "Bonjour")
-                #expect(translated[.dutch] == "Default")  // Falls back to default
-                #expect(translated[.german] == "Default")  // Falls back to default
+                #expect(translated[.dutch] == "Default")
+                #expect(translated[.german] == "Default")
             }
         }
 
@@ -240,19 +230,17 @@ struct `Translating Tests` {
                 )
             }
 
-            // Translated instance should maintain its original dictionary
             #expect(translated[.dutch] == "Hallo")
             #expect(translated[.french] == "Bonjour")
-            #expect(translated[.german] == "Default")  // Not included in original dependency
+            #expect(translated[.german] == "Default")
 
-            // Even if we change the dependency later
             withDependencies {
                 $0.languages = [.german]
             } operation: {
-                // Original instance unchanged
+
                 #expect(translated[.dutch] == "Hallo")
                 #expect(translated[.french] == "Bonjour")
-                #expect(translated[.german] == "Default")  // Still not in original instance
+                #expect(translated[.german] == "Default")
             }
         }
     }

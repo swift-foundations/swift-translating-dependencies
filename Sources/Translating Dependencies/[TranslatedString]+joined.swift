@@ -1,12 +1,3 @@
-//
-//  [TranslatedString]+joined.swift
-//  swift-translating-dependencies
-//
-//  Language-dependent list joining/formatting (rides the \.languages-reading
-//  closure initializer). Moved from swift-translating's umbrella
-//  (decomposition W3, C-translating).
-//
-
 public import Translated
 public import Translated_String
 

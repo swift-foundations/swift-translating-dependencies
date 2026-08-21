@@ -1,12 +1,3 @@
-//
-//  Translated.init (english non-optional).swift
-//  swift-translating-dependencies
-//
-//  The public 180-label initializer: english is the required default; the
-//  \.languages-filtering package initializer beside it does the work.
-//  Moved from swift-translating (decomposition W3, C-translating).
-//
-
 public import Translated
 
 extension Translated {

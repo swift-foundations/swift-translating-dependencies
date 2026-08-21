@@ -1,10 +1,3 @@
-//
-//  Language Dependency Tests.swift
-//  swift-translating-dependencies
-//
-//  Created by Coen ten Thije Boonkkamp on 25/07/2025.
-//
-
 import Dependencies
 import Dependencies_Test_Support
 import Language
@@ -52,7 +45,7 @@ struct `Language Dependency Tests` {
         @Test
         func `Languages dependency provides all languages by default`() {
             withDependencies { _ in
-                // Using default dependency values
+
             } operation: {
                 @Dependency(\.languages) var languages
                 #expect(languages.count == Set<Language>.supported.count)

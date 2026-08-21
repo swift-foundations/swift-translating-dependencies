@@ -1,10 +1,3 @@
-//
-//  Performance Tests.swift
-//  swift-translating-dependencies
-//
-//  Created by Coen ten Thije Boonkkamp on 25/07/2025.
-//
-
 import Dependencies
 import Dependencies_Test_Support
 import Foundation
@@ -43,13 +36,13 @@ struct Performance {
 
             let result = clock.measure {
                 withDependencies {
-                    $0.languages = Set(languages)  // All 179 languages
+                    $0.languages = Set(languages)
                 } operation: {
                     let translated = Translated<String> { language in
                         callCount += 1
                         return "Translation for \(language)"
                     }
-                    _ = translated[.english]  // Access one value to ensure initialization
+                    _ = translated[.english]
                 }
             }
 
@@ -64,7 +57,6 @@ struct Performance {
             print("   Average time per closure call: \(timeInSeconds / Double(callCount) * 1000)ms")
             print("   ⚠️  Performance issue: Closure called \(callCount) times for ALL languages!")
 
-            // This should demonstrate the performance problem
             #expect(
                 callCount == languages.count + 1,
                 "Current implementation calls closure for ALL languages"
@@ -119,12 +111,12 @@ struct Performance {
 
             let result = clock.measure {
                 withDependencies {
-                    $0.languages = Set(languages)  // First 50 languages
+                    $0.languages = Set(languages)
                 } operation: {
                     let translated = Translated<String> { language in
                         callCount += 1
-                        // Simulate expensive operation (database lookup, API call, complex formatting)
-                        Thread.sleep(forTimeInterval: 0.001)  // 1ms delay per call
+
+                        Thread.sleep(forTimeInterval: 0.001)
                         return "Expensive translation for \(language)"
                     }
                     _ = translated[.english]
@@ -145,7 +137,7 @@ struct Performance {
             )
 
             #expect(callCount == languages.count + 1, "Should call closure 50 times")
-            // With 1ms delay per call, 50 calls should take at least 50ms
+
             #expect(
                 result > Duration.milliseconds(45),
                 "Should take significant time due to expensive operations"
@@ -159,14 +151,12 @@ struct Performance {
 
             let result = clock.measure {
                 withDependencies {
-                    // Realistic subset
+
                     $0.languages = Set(Array(Set<Language>.supported).prefix(20))
                 } operation: {
                     var translatedStrings: [Translated<String>] = []
                     translatedStrings.reserveCapacity(stringCount)
 
-                    // swift-linter:disable:next counter loop iteration
-                    // REASON: swift-format's ReplaceForEachWithForLoop rule (CI-enforced) requires a for-in loop here; forEach was reverted after it broke CI.
                     for i in 1...stringCount {
                         let translated = Translated<String> { language in
                             "String \(i) in \(language)"
@@ -174,7 +164,6 @@ struct Performance {
                         translatedStrings.append(translated)
                     }
 
-                    // Access a few to ensure they're properly initialized
                     _ = translatedStrings[0][.english]
                     _ = translatedStrings[stringCount / 2][.dutch]
                     _ = translatedStrings[stringCount - 1][.french]
@@ -207,7 +196,7 @@ struct Performance {
             let clock = ContinuousClock()
 
             let result = clock.measure {
-                // This should be much faster as it doesn't call any expensive closures
+
                 let translated: Translated<String> = [
                     .english: "Hello",
                     .dutch: "Hallo",
@@ -234,7 +223,6 @@ struct Performance {
         func `Direct comparison - Closure vs Dictionary literal`() throws {
             let testLanguages: Set<Language> = [.english, .dutch, .french, .german, .spanish]
 
-            // Test closure-based approach
             var closureCallCount = 0
             let closureResult = ContinuousClock().measure {
                 withDependencies {
@@ -248,7 +236,6 @@ struct Performance {
                 }
             }
 
-            // Test dictionary literal approach
             let dictionaryResult = ContinuousClock().measure {
                 let translated: Translated<String> = [
                     .english: "Translation for en",
@@ -300,7 +287,6 @@ struct Performance {
         func `Memory comparison - All languages vs Limited languages`() throws {
             let initialMemory = Self.getMemoryUsage()
 
-            // Test with all languages
             var allLanguagesTranslated: Translated<String>?
             let allLanguagesMemoryResult = ContinuousClock().measure {
                 withDependencies {
@@ -313,10 +299,8 @@ struct Performance {
             }
             let allLanguagesMemory = Self.getMemoryUsage()
 
-            // Clear reference
             allLanguagesTranslated = nil
 
-            // Test with limited languages
             var limitedLanguagesTranslated: Translated<String>?
             let limitedLanguagesMemoryResult = ContinuousClock().measure {
                 withDependencies {
@@ -345,12 +329,9 @@ struct Performance {
             )
             print("   Memory per language (limited): \(limitedLanguagesMemoryIncrease / 5) bytes")
 
-            // Clean up
             limitedLanguagesTranslated = nil
 
         }
-
-        // MARK: - Helper Functions
 
         private static func getMemoryUsage() -> Int64 {
             #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)

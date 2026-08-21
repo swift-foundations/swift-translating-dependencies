@@ -1,17 +1,5 @@
 // swift-tools-version: 6.4
 
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-translating-dependencies open source project
-//
-// Copyright (c) 2026 Coen ten Thije Boonkkamp and the swift-translating-dependencies
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import PackageDescription
 
 let package = Package(
@@ -24,9 +12,7 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        // The translating × dependencies integration: the \.language and
-        // \.languages keys, the language-dependent Translated conformances and
-        // mass initializers, and the language-dependent Date formatting surface.
+
         .library(
             name: "Translating Dependencies",
             targets: ["Translating Dependencies"]

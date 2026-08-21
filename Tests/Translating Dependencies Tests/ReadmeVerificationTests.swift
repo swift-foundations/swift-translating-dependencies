@@ -8,41 +8,33 @@ import Translated_String
 import Translating
 import Translating_Dependencies
 
-// NOTE (W3 move): test display names cite the DONOR README's line numbers at move
-// time; the examples now live in this package. Reconciliation rides the close report.
 @Suite
 struct `Readme Verification` {
     @Suite struct Unit {}
     @Suite struct `Edge Case` {}
     @Suite struct Integration {}
 
-    // MARK: - Quick Start Example
-
     @Test
     func `Quick Start example from README lines 38-59`() throws {
-        // Create translated content
+
         let greeting: TranslatedString = [
             .english: "Hello",
             .dutch: "Hallo",
             .french: "Bonjour",
         ]
 
-        // Use with dependency injection
         withDependencies {
             $0.language = .dutch
         } operation: {
             #expect(greeting.description == "Hallo")
         }
 
-        // Direct language access
         let englishGreeting = greeting[.english]
         #expect(englishGreeting == "Hello")
 
         let koreanGreeting = greeting[.korean]
-        #expect(koreanGreeting == "Hello")  // fallback to English
+        #expect(koreanGreeting == "Hello")
     }
-
-    // MARK: - Translation Creation Examples
 
     @Test
     func `Dictionary literal syntax from README lines 67-74`() {
@@ -79,10 +71,8 @@ struct `Readme Verification` {
         let message: TranslatedString = "Hello World"
 
         #expect(message[.english] == "Hello World")
-        #expect(message[.dutch] == "Hello World")  // fallback to default
+        #expect(message[.dutch] == "Hello World")
     }
-
-    // MARK: - Language Fallback Examples
 
     @Test
     func `Language fallback system from README lines 97-106`() {
@@ -91,12 +81,10 @@ struct `Readme Verification` {
             .dutch: "Hallo",
         ]
 
-        #expect(text[.afrikaans] == "Hallo")  // afrikaans → dutch → english
-        #expect(text[.limburgish] == "Hallo")  // limburgish → dutch → english
-        #expect(text[.chinese] == "Hello")  // chinese → english
+        #expect(text[.afrikaans] == "Hallo")
+        #expect(text[.limburgish] == "Hallo")
+        #expect(text[.chinese] == "Hello")
     }
-
-    // MARK: - Dependency Injection Examples
 
     @Test
     func `Dependency injection from README lines 117-128`() {
@@ -111,8 +99,6 @@ struct `Readme Verification` {
             #expect(greeting.description == "Bonjour")
         }
     }
-
-    // MARK: - Singular/Plural Forms Examples
 
     @Test
     func `Singular/plural forms from README lines 135-144`() {
@@ -135,8 +121,6 @@ struct `Readme Verification` {
         }
     }
 
-    // MARK: - Date Formatting Examples
-
     @Test
     func `Localized date formatting from README lines 150-160`() {
         let date = Date()
@@ -146,7 +130,6 @@ struct `Readme Verification` {
             translated: true
         )
 
-        // Verify it has content for different languages
         withDependencies {
             $0.language = .english
         } operation: {
@@ -159,8 +142,6 @@ struct `Readme Verification` {
             #expect(!formatted.description.isEmpty)
         }
     }
-
-    // MARK: - Generic Translation Container Examples
 
     @Test
     func `Generic translation container from README lines 166-179`() {
@@ -182,8 +163,6 @@ struct `Readme Verification` {
         #expect(settings[.dutch] == false)
     }
 
-    // MARK: - String Operations Examples
-
     @Test
     func `String operations from README lines 185-195`() {
         let greeting: TranslatedString = [.english: "hello", .dutch: "hallo"]
@@ -196,7 +175,6 @@ struct `Readme Verification` {
         #expect(withPunctuation.english == "hello.")
         #expect(withPunctuation.dutch == "hallo.")
 
-        // Concatenation
         let prefix: TranslatedString = [.english: "Good ", .dutch: "Goeie "]
         let time: TranslatedString = [.english: "morning", .dutch: "morgen"]
         let combined = prefix + time
@@ -205,11 +183,9 @@ struct `Readme Verification` {
         #expect(combined.dutch == "Goeie morgen")
     }
 
-    // MARK: - Performance Examples
-
     @Test
     func `Dictionary literal performance recommendation from README lines 238-243`() {
-        // ✅ Preferred - Fast dictionary literal
+
         let text: TranslatedString = [
             .english: "Hello",
             .dutch: "Hallo",

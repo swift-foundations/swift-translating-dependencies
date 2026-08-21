@@ -1,12 +1,3 @@
-//
-//  Translating Platform Date Tests.swift
-//  swift-translating-dependencies
-//
-//  Date-formatting test suites moved from swift-translating's
-//  Translating Platform Tests (decomposition W3, C-translating) — they
-//  exercise the Date+Description/Date+Formatted surface that now lives here.
-//
-
 import Dependencies
 import Dependencies_Test_Support
 import Foundation
@@ -30,7 +21,7 @@ struct `Translating Platform Date Tests` {
 
         @Test
         func `Creates FormattedDate with date and time styles`() {
-            let formatted = Date(timeIntervalSince1970: 0)  // 01-01-1970
+            let formatted = Date(timeIntervalSince1970: 0)
                 .formatted(
                     date: .long,
                     time: .omitted,
@@ -108,7 +99,7 @@ struct `Translating Platform Date Tests` {
 
         @Test
         func `TranslatedString uses dependency language - English`() {
-            // January 1, 2022 12:00:00 AM UTC
+
             let date = Date(timeIntervalSince1970: 1_641_024_000)
             let formatted = date.formatted(date: .long, time: .omitted, translated: true)
 
@@ -116,56 +107,56 @@ struct `Translating Platform Date Tests` {
                 $0.language = .english
             } operation: {
                 let description = formatted.description
-                // Should contain English month name
+
                 #expect(description.contains("January") || description.contains("Jan"))
             }
         }
 
         @Test
         func `TranslatedString uses dependency language - French`() {
-            let date = Date(timeIntervalSince1970: 1_641_024_000)  // January 1, 2022
+            let date = Date(timeIntervalSince1970: 1_641_024_000)
             let formatted = date.formatted(date: .long, time: .omitted, translated: true)
 
             withDependencies {
                 $0.language = .french
             } operation: {
                 let description = formatted.description
-                // Should contain French month name
+
                 #expect(description.contains("janvier") || description.contains("janv"))
             }
         }
 
         @Test
         func `TranslatedString uses dependency language - German`() {
-            let date = Date(timeIntervalSince1970: 1_641_024_000)  // January 1, 2022
+            let date = Date(timeIntervalSince1970: 1_641_024_000)
             let formatted = date.formatted(date: .long, time: .omitted, translated: true)
 
             withDependencies {
                 $0.language = .german
             } operation: {
                 let description = formatted.description
-                // Should contain German month name
+
                 #expect(description.contains("Januar") || description.contains("Jan"))
             }
         }
 
         @Test
         func `TranslatedString uses dependency language - Dutch`() {
-            let date = Date(timeIntervalSince1970: 1_641_024_000)  // January 1, 2022
+            let date = Date(timeIntervalSince1970: 1_641_024_000)
             let formatted = date.formatted(date: .long, time: .omitted, translated: true)
 
             withDependencies {
                 $0.language = .dutch
             } operation: {
                 let description = formatted.description
-                // Should contain Dutch month name
+
                 #expect(description.contains("januari") || description.contains("jan"))
             }
         }
 
         @Test
         func `TranslatedString with time formatting`() {
-            // January 1, 2022 12:00:00 PM UTC
+
             let date = Date(timeIntervalSince1970: 1_641_067_200)
             let formatted = date.formatted(date: .omitted, time: .shortened, translated: true)
 
@@ -173,7 +164,7 @@ struct `Translating Platform Date Tests` {
                 $0.language = .english
             } operation: {
                 let description = formatted.description
-                // Should contain time information
+
                 #expect(
                     description.contains(":") || description.contains("AM")
                         || description.contains("PM")
@@ -183,7 +174,7 @@ struct `Translating Platform Date Tests` {
 
         @Test
         func `TranslatedString with date and time formatting`() {
-            // January 1, 2022 12:00:00 PM UTC
+
             let date = Date(timeIntervalSince1970: 1_641_067_200)
             let formatted = date.formatted(date: .numeric, time: .shortened, translated: true)
 
@@ -191,7 +182,7 @@ struct `Translating Platform Date Tests` {
                 $0.language = .english
             } operation: {
                 let description = formatted.description
-                // Should contain both date and time elements
+
                 #expect(description.contains("2022") || description.contains("22"))
                 #expect(
                     description.contains(":") || description.contains("AM")
@@ -202,7 +193,7 @@ struct `Translating Platform Date Tests` {
 
         @Test
         func `TranslatedString changes with different dependency values`() {
-            let date = Date(timeIntervalSince1970: 1_641_024_000)  // January 1, 2022
+            let date = Date(timeIntervalSince1970: 1_641_024_000)
             let formatted = date.formatted(date: .long, time: .omitted, translated: true)
 
             var englishResult: String = ""
@@ -220,7 +211,6 @@ struct `Translating Platform Date Tests` {
                 frenchResult = formatted.description
             }
 
-            // Results should be different between languages
             #expect(englishResult != frenchResult)
         }
     }
@@ -230,7 +220,7 @@ struct `Translating Platform Date Tests` {
 
         @Test
         func `Formatting historical dates`() {
-            let historicalDate = Date(timeIntervalSince1970: -631_152_000)  // January 1, 1950
+            let historicalDate = Date(timeIntervalSince1970: -631_152_000)
             let formatted = historicalDate.formatted(date: .long, time: .omitted, translated: true)
 
             withDependencies {
@@ -243,7 +233,7 @@ struct `Translating Platform Date Tests` {
 
         @Test
         func `Formatting future dates`() {
-            let futureDate = Date(timeIntervalSince1970: 1_893_456_000)  // January 1, 2030
+            let futureDate = Date(timeIntervalSince1970: 1_893_456_000)
             let formatted = futureDate.formatted(date: .long, time: .omitted, translated: true)
 
             withDependencies {
@@ -256,7 +246,7 @@ struct `Translating Platform Date Tests` {
 
         @Test
         func `Formatting with different date styles produces different lengths`() {
-            let date = Date(timeIntervalSince1970: 1_641_024_000)  // January 1, 2022
+            let date = Date(timeIntervalSince1970: 1_641_024_000)
 
             withDependencies {
                 $0.language = .english
@@ -281,7 +271,6 @@ struct `Translating Platform Date Tests` {
                 )
                 .description
 
-                // Generally, complete should be longer than long, long longer than numeric, etc.
                 #expect(completeFormatted.count >= longFormatted.count)
                 #expect(longFormatted.count >= abbreviatedFormatted.count)
                 #expect(
@@ -293,7 +282,7 @@ struct `Translating Platform Date Tests` {
 
         @Test
         func `Formatting with different time styles produces different precision`() {
-            // January 1, 2022 12:00:00 PM UTC
+
             let date = Date(timeIntervalSince1970: 1_641_067_200)
 
             withDependencies {
@@ -310,13 +299,10 @@ struct `Translating Platform Date Tests` {
                 let completeTime = date.formatted(date: .omitted, time: .complete, translated: true)
                     .description
 
-                // All should contain time separators
                 #expect(shortenedTime.contains(":"))
                 #expect(standardTime.contains(":"))
                 #expect(completeTime.contains(":"))
 
-                // Longer formats might include more detail (timezone info, seconds, etc.)
-                // This is a basic check that they're different
                 #expect(shortenedTime != standardTime || standardTime != completeTime)
             }
         }
@@ -327,7 +313,7 @@ struct `Translating Platform Date Tests` {
 
         @Test
         func `Formatting epoch date (Unix timestamp 0)`() {
-            let epochDate = Date(timeIntervalSince1970: 0)  // January 1, 1970
+            let epochDate = Date(timeIntervalSince1970: 0)
             let formatted = epochDate.formatted(date: .long, time: .standard, translated: true)
 
             withDependencies {
@@ -347,7 +333,7 @@ struct `Translating Platform Date Tests` {
                 $0.language = .english
             } operation: {
                 let description = formatted.description
-                // Even with .omitted styles, should produce some output
+
                 #expect(!description.isEmpty)
             }
         }
@@ -371,7 +357,6 @@ struct `Translating Platform Date Tests` {
             let date = Date(timeIntervalSince1970: 1_641_024_000)
             let formatted = date.formatted(date: .numeric, time: .omitted, translated: true)
 
-            // Test with different languages
             let languages: [Language] = [
                 .english,
                 .dutch,

@@ -1,10 +1,3 @@
-//
-//  Date+Description.swift
-//  swift-translating-dependencies
-//
-//  Created by Coen ten Thije Boonkkamp on 25/07/2025.
-//
-
 import Dependencies
 public import Foundation
 import Language
